@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | BananaGuard </title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f2f4f8;
+            color: #1f2933;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #173f20,
+                    #205b2b
+                );
+
+            color: white;
+
+            padding: 28px 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 10px;
+
+            margin-bottom: 45px;
+        }
+
+
+        .logo-icon {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 14px;
+
+            background: #d9ef39;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,.2);
+        }
+
+
+        .logo-text h2 {
+
+            font-size: 18px;
+            letter-spacing: .3px;
+        }
+
+
+        .logo-text p {
+
+            font-size: 11px;
+            color: #b9d7bb;
+
+            margin-top: 3px;
+        }
+
+
+        /* NAVIGATION */
+
+        .nav-title {
+
+            font-size: 10px;
+
+            color: #9bc39e;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            margin: 0 12px 12px;
+        }
+
+
+        .nav {
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .nav a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 14px;
+
+            color: #dcebdc;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .nav a:hover {
+
+            background: rgba(255,255,255,.1);
+
+            color: white;
+        }
+
+
+        .nav a.active {
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            font-weight: 700;
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            text-align: center;
+
+            font-size: 17px;
+        }
+
+
+        /* SIDEBAR BOTTOM */
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+            border-top: 1px solid rgba(255,255,255,.12);
+
+            padding-top: 18px;
+        }
+
+
+        .user-mini {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 8px;
+        }
+
+
+        .avatar {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .user-mini strong {
+
+            font-size: 13px;
+        }
+
+
+        .user-mini span {
+
+            display: block;
+
+            color: #a9c8ab;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+        }
+
+
+        /*=========================
+           MAIN
+        =========================*/
+
+        .main {
+
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            padding: 28px 38px;
+        }
+
+
+        /* TOP BAR */
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .page-title h1 {
+
+            font-size: 27px;
+
+            color: #183c1d;
+        }
+
+
+        .page-title p {
+
+            color: #718071;
+
+            margin-top: 5px;
+
+            font-size: 13px;
+        }
+
+
+        .top-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .date-badge {
+
+            background: white;
+
+            border: 1px solid #e3e9df;
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            color: #617061;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 190px;
+
+            border-radius: 20px;
+
+            padding: 30px 34px;
+
+            margin-bottom: 25px;
+
+            background:
+                linear-gradient(
+                    110deg,
+                    #173f20 0%,
+                    #27652f 65%,
+                    #3f7937 100%
+                );
+
+            color: white;
+
+            box-shadow:
+                0 12px 30px rgba(31,82,38,.15);
+        }
+
+
+        .hero::after {
+
+            content: "🍃";
+
+            position: absolute;
+
+            right: 55px;
+            top: -25px;
+
+            font-size: 150px;
+
+            opacity: .10;
+
+            transform: rotate(-15deg);
+        }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            right: 155px;
+            bottom: -25px;
+
+            font-size: 95px;
+
+            opacity: .12;
+
+            transform: rotate(-20deg);
+        }
+
+
+        .hero-content {
+
+            position: relative;
+
+            z-index: 2;
+
+            max-width: 650px;
+        }
+
+
+        .hero-label {
+
+            display: inline-block;
+
+            background: rgba(217,239,57,.18);
+
+            color: #e6f77d;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 12px;
+        }
+
+
+        .hero h2 {
+
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .hero p {
+
+            color: #d2e3d3;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            max-width: 560px;
+        }
+
+
+        .hero-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 20px;
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            text-decoration: none;
+
+            padding: 11px 18px;
+
+            border-radius: 9px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+
+        .hero-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 5px 15px rgba(0,0,0,.2);
+        }
+
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .section-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin: 25px 0 14px;
+        }
+
+
+        .section-title h2 {
+
+            font-size: 17px;
+
+            color: #29432d;
+        }
+
+
+        .section-title span {
+
+            color: #879487;
+
+            font-size: 11px;
+        }
+
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 16px;
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            border: 1px solid #e6ece3;
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            transition: .2s;
+        }
+
+
+        .stat-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(40,70,40,.08);
+        }
+
+
+        .stat-icon {
+
+            width: 40px;
+            height: 40px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 19px;
+
+            background: #eef6d5;
+
+            margin-bottom: 15px;
+        }
+
+
+        .stat-card:nth-child(2)
+        .stat-icon {
+
+            background: #e5f4e7;
+        }
+
+
+        .stat-card:nth-child(3)
+        .stat-icon {
+
+            background: #fff1d7;
+        }
+
+
+        .stat-card:nth-child(4)
+        .stat-icon {
+
+            background: #e8eaf8;
+        }
+
+
+        .stat-card p {
+
+            font-size: 11px;
+
+            color: #7b877c;
+
+            margin-bottom: 6px;
+        }
+
+
+        .stat-card h3 {
+
+            font-size: 27px;
+
+            color: #213b25;
+        }
+
+
+        /* =========================
+           CONTENT GRID
+        ========================= */
+
+        .content-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr .9fr;
+
+            gap: 18px;
+
+            margin-top: 18px;
+        }
+
+
+        .panel {
+
+            background: white;
+
+            border: 1px solid #e6ece3;
+
+            border-radius: 15px;
+
+            padding: 23px;
+        }
+
+
+        .panel-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+
+        .panel-header h2 {
+
+            font-size: 16px;
+
+            color: #29432d;
+        }
+
+
+        .panel-header a {
+
+            color: #49764c;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        /* DISEASE BARS */
+
+        .disease-row {
+
+            margin-bottom: 20px;
+        }
+
+
+        .disease-info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+        }
+
+
+        .disease-name {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #3f4f41;
+        }
+
+
+        .disease-number {
+
+            font-size: 11px;
+
+            color: #7b877c;
+        }
+
+
+        .bar {
+
+            height: 8px;
+
+            background: #edf1eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .bar-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #75a83b,
+                    #c5df35
+                );
+
+            width: 0;
+        }
+
+
+        /* We calculate approximate visual widths */
+
+        .cordana-bar {
+            width: 0;
+        }
+
+
+        .panama-bar {
+            width: 0;
+        }
+
+
+        .sigatoka-bar {
+            width: 0;
+        }
+
+
+        /* =========================
+           HEALTH SUMMARY
+        ========================= */
+
+        .health-box {
+
+            text-align: center;
+
+            padding: 10px 0 20px;
+        }
+
+
+        .health-circle {
+
+            width: 125px;
+
+            height: 125px;
+
+            border-radius: 50%;
+
+            margin: 5px auto 20px;
+
+            background:
+                conic-gradient(
+                    #6fa53a var(--healthy-percentage),
+                    #e9eee6 0
+                );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position:  relative;
+        }
+
+
+        .health-circle::after {
+
+            content: "";
+
+            width: 91px;
+
+            height: 91px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            position: absolute;
+        }
+
+
+        .health-value {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #29432d;
+        }
+
+
+        .health-label {
+
+            font-size: 11px;
+
+            color: #778177;
+        }
+
+
+        .most-common {
+
+            background: #f4f8ef;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            margin-top: 15px;
+
+            text-align: left;
+        }
+
+
+        .most-common small {
+
+            display: block;
+
+            color: #7c887d;
+
+            font-size: 10px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .most-common strong {
+
+            color: #29432d;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           ACCOUNT
+        ========================= */
+
+        .account-panel {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .account-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+        }
+
+
+        .large-avatar {
+
+            width: 52px;
+
+            height: 52px;
+
+            border-radius: 15px;
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .account-info h3 {
+
+            font-size: 14px;
+
+            color: #29432d;
+        }
+
+
+        .account-info p {
+
+            font-size: 11px;
+
+            color: #7d887e;
+
+            margin-top: 4px;
+        }
+
+
+        .account-date {
+
+            color: #7d887e;
+
+            font-size: 11px;
+
+            text-align: right;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .content-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 15px;
+
+            }
+
+
+            .logo {
+
+                margin-bottom: 18px;
+            }
+
+
+            .nav {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+            }
+
+
+            .nav-title,
+            .sidebar-bottom {
+
+                display: none;
+            }
+
+
+            .nav a {
+
+                white-space: nowrap;
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding: 22px 16px;
+            }
+
+
+            .topbar {
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .date-badge {
+
+                display: none;
+            }
+
+
+            .hero {
+
+                padding: 25px;
+            }
+
+
+            .hero::after,
+            .hero::before {
+
+                display: none;
+            }
+
+
+            .account-panel {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .stats {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .page-title h1 {
+
+                font-size: 22px;
+            }
+
+
+            .hero h2 {
+
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌳
+        </div>
+
+        <div class="logo-text">
+
+            <h2>BananaGuard AI</h2>
+
+            <p>Plant Health Intelligence</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <nav class="nav">
+
+        <a
+            href="{{ url_for('profile') }}"
+            class="active"
+        >
+
+            <span class="nav-icon">▦</span>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('predict') }}">
+
+            <span class="nav-icon">🔍</span>
+
+            Disease Detection
+
+        </a>
+
+
+        <a href="{{ url_for('history') }}">
+
+            <span class="nav-icon">📋</span>
+
+            Prediction History
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="user-mini">
+
+            <div class="avatar">
+
+                {{ user["name"][0]|upper }}
+
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ user["name"] }}
+                </strong>
+
+                <span>
+                    User Account
+                </span>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <a
+            href="{{ url_for('logout') }}"
+            style="
+                color:#c8dfca;
+                text-decoration:none;
+                font-size:12px;
+                padding:8px;
+                display:block;
+            "
+        >
+            🚪 Sign out
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <div class="page-title">
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <p>
+                Monitor your banana leaf health predictions.
+            </p>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <div class="date-badge">
+
+                🌿 AI Disease Detection
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-label">
+                Banana Disease Intelligence
+            </div>
+
+            <h2>
+                Welcome back, {{ user["name"] }}! 👋
+            </h2>
+
+            <p>
+                Use our EfficientNetB0-powered system to
+                analyze banana leaves and identify possible
+                diseases from uploaded images.
+            </p>
+
+            <a
+                class="hero-button"
+                href="{{ url_for('predict') }}"
+            >
+                🔍 Analyze a Leaf
+                →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <div class="section-title">
+
+        <h2>
+            Overview
+        </h2>
+
+        <span>
+            Your prediction activity
+        </span>
+
+    </div>
+
+
+    <section class="stats">
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🔬
+            </div>
+
+            <p>
+                Total Predictions
+            </p>
+
+            <h3>
+                {{ total_predictions }}
+            </h3>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🌿
+            </div>
+
+            <p>
+                Healthy Leaves
+            </p>
+
+            <h3>
+                {{ healthy_count }}
+            </h3>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                ⚠️
+            </div>
+
+            <p>
+                Diseased Leaves
+            </p>
+
+            <h3>
+                {{ diseased_count }}
+            </h3>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                🎯
+            </div>
+
+            <p>
+                Average Confidence
+            </p>
+
+            <h3>
+                {{ "%.1f"|format(average_confidence) }}%
+            </h3>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- CONTENT -->
+
+    <div class="content-grid">
+
+
+        <!-- DISEASE STATISTICS -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    🌱 Disease Detection
+                </h2>
+
+                <a
+                    href="{{ url_for('history') }}"
+                >
+                    View history →
+                </a>
+
+            </div>
+
+
+            <!-- CORDANA -->
+
+            <div class="disease-row">
+
+                <div class="disease-info">
+
+                    <span class="disease-name">
+                        Cordana
+                    </span>
+
+                    <span class="disease-number">
+                        {{ cordana_count }}
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-fill cordana-bar"
+                        data-width="{{ ((cordana_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PANAMA -->
+
+            <div class="disease-row">
+
+                <div class="disease-info">
+
+                    <span class="disease-name">
+                        Panama
+                    </span>
+
+                    <span class="disease-number">
+                        {{ panama_count }}
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-fill panama-bar"
+                        data-width="{{ ((panama_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIGATOKA -->
+
+            <div class="disease-row">
+
+                <div class="disease-info">
+
+                    <span class="disease-name">
+                        Sigatoka
+                    </span>
+
+                    <span class="disease-number">
+                        {{ sigatoka_count }}
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-fill sigatoka-bar"
+                        data-width="{{ ((sigatoka_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HEALTHY -->
+
+            <div class="disease-row">
+
+                <div class="disease-info">
+
+                    <span class="disease-name">
+                        Healthy
+                    </span>
+
+                    <span class="disease-number">
+                        {{ healthy_count }}
+                    </span>
+
+                </div>
+
+                <div class="bar">
+
+                    <div
+                        class="bar-fill healthy-bar"
+                        data-width="{{ ((healthy_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HEALTH SUMMARY -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <h2>
+                    🍃 Health Summary
+                </h2>
+
+            </div>
+
+
+            <div class="health-box">
+
+                <div
+                    class="health-circle"
+                    data-healthy-percentage="{{ ((healthy_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                >
+
+                    <div class="health-value">
+
+                        {% if total_predictions > 0 %}
+
+                            {{ (healthy_count / total_predictions * 100)|round(0)|int }}%
+
+                        {% else %}
+
+                            0%
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="health-label">
+
+                    Healthy prediction rate
+
+                </div>
+
+
+                <div class="most-common">
+
+                    <small>
+                        MOST COMMON RESULT
+                    </small>
+
+                    <strong>
+                        {{ most_common_prediction|title }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- ACCOUNT -->
+
+    <section class="panel account-panel">
+
+
+        <div class="account-info">
+
+            <div class="large-avatar">
+
+                {{ user["name"][0]|upper }}
+
+            </div>
+
+
+            <div>
+
+                    <div
+                        class="bar-fill healthy-bar"
+                        data-width="{{ ((healthy_count / total_predictions * 100)|round(1)) if total_predictions > 0 else 0 }}%"
+                    >
+        </div>
+
+
+        <div class="account-date">
+
+            <div>
+                Account created
+            </div>
+
+            <strong>
+                {{ user["created_at"] }}
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+<script>
+    document.querySelectorAll("[data-width]").forEach(element => {
+        element.style.width = element.dataset.width;
+    });
+
+    document.querySelectorAll("[data-healthy-percentage]").forEach(element => {
+        element.style.setProperty(
+            "--healthy-percentage",
+            element.dataset.healthyPercentage
+        );
+    });
+</script>
+
+
+</body>
+
+</html>

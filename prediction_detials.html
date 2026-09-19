@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Prediction Details | BananaGuard AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f8f2;
+            color: #25352a;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #173f20,
+                    #205b2b
+                );
+
+            color: white;
+
+            padding: 28px 18px;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 10px;
+
+            margin-bottom: 45px;
+        }
+
+
+        .logo-icon {
+
+            width: 45px;
+            height: 45px;
+
+            border-radius: 14px;
+
+            background: #d9ef39;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+
+        .logo-text h2 {
+            font-size: 18px;
+        }
+
+
+        .logo-text p {
+
+            font-size: 11px;
+
+            color: #b9d7bb;
+
+            margin-top: 3px;
+        }
+
+
+        .nav-title {
+
+            font-size: 10px;
+
+            color: #9bc39e;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            margin: 0 12px 12px;
+        }
+
+
+        .nav {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .nav a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 14px;
+
+            color: #dcebdc;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .nav a:hover {
+
+            background:
+                rgba(255,255,255,.1);
+
+            color: white;
+        }
+
+
+        .nav a.active {
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            font-weight: 700;
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            text-align: center;
+        }
+
+
+        .sidebar-bottom {
+
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 25px;
+            right: 25px;
+
+            border-top:
+                1px solid rgba(255,255,255,.12);
+
+            padding-top: 18px;
+        }
+
+
+        .user-mini {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .avatar {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .user-mini strong {
+            font-size: 13px;
+        }
+
+
+        .user-mini span {
+
+            display: block;
+
+            color: #a9c8ab;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            padding: 30px 40px;
+        }
+
+
+        /* =========================
+           TOPBAR
+        ========================= */
+
+        .topbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .title h1 {
+
+            color: #183c1d;
+
+            font-size: 27px;
+        }
+
+
+        .title p {
+
+            color: #758276;
+
+            font-size: 13px;
+
+            margin-top: 5px;
+        }
+
+
+        .back-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            background: white;
+
+            border: 1px solid #dfe7dc;
+
+            color: #426746;
+
+            text-decoration: none;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+
+        .back-button:hover {
+
+            background: #edf5e9;
+        }
+
+
+        /* =========================
+           RESULT HERO
+        ========================= */
+
+        .result-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1d5127,
+                    #2f7136
+                );
+
+            color: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 30px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(31,82,39,.12);
+        }
+
+
+        .result-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+        }
+
+
+        .result-icon {
+
+            width: 72px;
+            height: 72px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,.12);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 38px;
+        }
+
+
+        .result-label {
+
+            color: #b9d7bb;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .result-name {
+
+            font-size: 29px;
+
+            font-weight: 750;
+
+            margin-bottom: 5px;
+        }
+
+
+        .result-description {
+
+            color: #d5e6d5;
+
+            font-size: 11px;
+        }
+
+
+        .confidence-circle {
+
+            width: 110px;
+            height: 110px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(217,239,57,.15);
+
+            border:
+                7px solid #d9ef39;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            align-items: center;
+        }
+
+
+        .confidence-circle strong {
+
+            font-size: 22px;
+
+            color: #d9ef39;
+        }
+
+
+        .confidence-circle span {
+
+            font-size: 9px;
+
+            color: #d5e6d5;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .content-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.35fr .65fr;
+
+            gap: 20px;
+        }
+
+
+        .card {
+
+            background: white;
+
+            border: 1px solid #e3eade;
+
+            border-radius: 16px;
+
+            padding: 24px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(40,70,40,.04);
+        }
+
+
+        .card-header {
+
+            margin-bottom: 20px;
+        }
+
+
+        .card-header h2 {
+
+            color: #29432d;
+
+            font-size: 16px;
+        }
+
+
+        .card-header p {
+
+            color: #89938a;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        /* =========================
+           PROBABILITIES
+        ========================= */
+
+        .probability {
+
+            margin-bottom: 19px;
+        }
+
+
+        .probability:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .probability-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 7px;
+        }
+
+
+        .probability-name {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #435346;
+        }
+
+
+        .probability-value {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            color: #315c36;
+        }
+
+
+        .dot {
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #7ca945;
+        }
+
+
+        .bar {
+
+            height: 8px;
+
+            background: #edf1eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #72a53c,
+                    #c7e238
+                );
+        }
+
+
+        /* =========================
+           INFORMATION
+        ========================= */
+
+        .info-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 14px 0;
+
+            border-bottom:
+                1px solid #edf0eb;
+        }
+
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .info-label {
+
+            color: #879187;
+
+            font-size: 11px;
+        }
+
+
+        .info-value {
+
+            color: #344936;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-align: right;
+
+            max-width: 190px;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+
+        .action-primary,
+        .action-secondary {
+
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 6px;
+
+            text-decoration: none;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+
+        .action-primary {
+
+            background: #285d2e;
+
+            color: white;
+        }
+
+
+        .action-primary:hover {
+
+            background: #173f20;
+        }
+
+
+        .action-secondary {
+
+            background: #edf5e9;
+
+            color: #426746;
+        }
+
+
+        .action-secondary:hover {
+
+            background: #dfead9;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            color: #8a958b;
+
+            font-size: 10px;
+
+            margin-top: 25px;
+
+            padding-bottom: 20px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .content-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 15px;
+            }
+
+
+            .logo {
+
+                margin-bottom: 18px;
+            }
+
+
+            .nav {
+
+                flex-direction: row;
+
+                overflow-x: auto;
+            }
+
+
+            .nav-title,
+            .sidebar-bottom {
+
+                display: none;
+            }
+
+
+            .nav a {
+
+                white-space: nowrap;
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                padding: 22px 16px;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .topbar {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 12px;
+            }
+
+
+            .result-card {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .confidence-circle {
+
+                align-self: center;
+            }
+
+
+            .result-name {
+
+                font-size: 24px;
+            }
+
+
+            .actions {
+
+                flex-direction: column;
+            }
+
+        }
+          
+.image-card {
+
+    margin-bottom: 20px;
+}
+
+
+.detail-image {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: auto;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #edf5e9;
+}
+
+
+.detail-image img {
+
+    width: 100%;
+
+    max-height: 450px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================
+   RECOMMENDATIONS
+========================= */
+
+.recommendation-card {
+    margin-top: 20px;
+}
+
+.recommendation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.recommendation-item {
+    background: #f7faf4;
+    border: 1px solid #e2ecdc;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.recommendation-item h3 {
+    color: #315537;
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+.recommendation-item p,
+.recommendation-item li {
+    color: #637263;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.recommendation-item ul {
+    margin: 0;
+    padding-left: 17px;
+}
+
+.recommendation-note {
+    margin-top: 15px;
+    padding: 12px 14px;
+    border-left: 3px solid #d9a72e;
+    background: #fff8e8;
+    color: #78622d;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+            }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌳
+        </div>
+
+        <div class="logo-text">
+
+            <h2>BananaGuard AI</h2>
+
+            <p>
+                Plant Health Intelligence
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <nav class="nav">
+
+
+        <a href="{{ url_for('profile') }}">
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="{{ url_for('predict') }}">
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            Disease Detection
+
+        </a>
+
+
+        <a
+            href="{{ url_for('history') }}"
+            class="active"
+        >
+
+            <span class="nav-icon">
+                📋
+            </span>
+
+            Prediction History
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="user-mini">
+
+            <div class="avatar">
+
+                {{ session["user_name"][0]|upper }}
+
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ session["user_name"] }}
+                </strong>
+
+                <span>
+                    User Account
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+        <div class="title">
+            <div class="card image-card">
+
+    <div class="card-header">
+
+        <h2>
+            🖼️ Analyzed Leaf
+        </h2>
+
+        <p>
+            Image used for this AI prediction.
+        </p>
+
+    </div>
+
+
+    <div class="detail-image">
+
+        <img
+            src="{{
+                url_for(
+                    'static',
+                    filename='uploads/' + prediction['image_name']
+                )
+            }}"
+            alt="Analyzed banana leaf"
+        >
+
+ 
+ </div>
+
+</div>
+
+            <h1>
+                Prediction Details
+            </h1>
+
+            <p>
+                Detailed AI analysis of your banana leaf.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('history') }}"
+            class="back-button"
+        >
+
+            ← Back to History
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         RESULT HERO
+    ========================= -->
+
+    <section class="result-card">
+
+
+        <div class="result-left">
+
+
+            <div class="result-icon">
+
+                {% if prediction["prediction"] == "healthy" %}
+                    🌿
+
+                {% elif prediction["prediction"] == "cordana" %}
+                    🍂
+
+                {% elif prediction["prediction"] == "panama" %}
+                    🍃
+
+                {% else %}
+                    🌱
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <div class="result-label">
+                    AI Prediction
+                </div>
+
+
+                <div class="result-name">
+
+                    {{ prediction["prediction"]|title }}
+
+                </div>
+
+
+                <div class="result-description">
+
+                    {% if prediction["prediction"] == "healthy" %}
+
+                        No major disease detected in this analysis.
+
+                    {% elif prediction["prediction"] == "cordana" %}
+
+                        The model identified characteristics
+                        associated with Cordana disease.
+
+                    {% elif prediction["prediction"] == "panama" %}
+
+                        The model identified characteristics
+                        associated with Panama disease.
+
+                    {% elif prediction["prediction"] == "sigatoka" %}
+
+                        The model identified characteristics
+                        associated with Sigatoka disease.
+
+                    {% else %}
+
+                        AI classification result from the
+                        banana leaf analysis.
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="confidence-circle">
+
+            <strong>
+                {{ "%.1f"|format(prediction["confidence"]) }}%
+            </strong>
+
+            <span>
+                Confidence
+            </span>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         CONTENT
+    ========================= -->
+
+    <div class="content-grid">
+
+
+        <!-- PROBABILITIES -->
+
+        <section class="card">
+
+
+            <div class="card-header">
+
+                <h2>
+                    📊 Class Probabilities
+                </h2>
+
+                <p>
+                    Probability assigned to each possible class.
+                </p>
+
+            </div>
+
+
+            <!-- CORDANA -->
+
+            <div class="probability">
+
+                <div class="probability-top">
+
+                    <div class="probability-name">
+
+                        <span class="dot"></span>
+
+                        Cordana
+
+                    </div>
+
+                    <span class="probability-value">
+
+                        {{ "%.2f"|format(
+                            prediction["cordana_probability"]
+                        ) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="bar">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:
+                            {{ prediction['cordana_probability'] }}%;
+                        "
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- HEALTHY -->
+
+            <div class="probability">
+
+                <div class="probability-top">
+
+                    <div class="probability-name">
+
+                        <span class="dot"></span>
+
+                        Healthy
+
+                    </div>
+
+                    <span class="probability-value">
+
+                        {{ "%.2f"|format(
+                            prediction["healthy_probability"]
+                        ) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="bar">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:
+                            {{ prediction['healthy_probability'] }}%;
+                        "
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PANAMA -->
+
+            <div class="probability">
+
+                <div class="probability-top">
+
+                    <div class="probability-name">
+
+                        <span class="dot"></span>
+
+                        Panama
+
+                    </div>
+
+                    <span class="probability-value">
+
+                        {{ "%.2f"|format(
+                            prediction["panama_probability"]
+                        ) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="bar">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:
+                            {{ prediction['panama_probability'] }}%;
+                        "
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SIGATOKA -->
+
+            <div class="probability">
+
+                <div class="probability-top">
+
+                    <div class="probability-name">
+
+                        <span class="dot"></span>
+
+                        Sigatoka
+
+                    </div>
+
+                    <span class="probability-value">
+
+                        {{ "%.2f"|format(
+                            prediction["sigatoka_probability"]
+                        ) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="bar">
+
+                    <div
+                        class="fill"
+                        style="
+                            width:
+                            {{ prediction['sigatoka_probability'] }}%;
+                     "   
+                    >
+                </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- INFORMATION -->
+
+        <section class="card">
+
+
+            <div class="card-header">
+
+                <h2>
+                    🔎 Analysis Information
+                </h2>
+
+                <p>
+                    Details about this prediction.
+                </p>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Prediction ID
+                </span>
+
+                <span class="info-value">
+                    #{{ prediction["id"] }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Image
+                </span>
+
+                <span class="info-value">
+                    {{ prediction["image_name"] }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Result
+                </span>
+
+                <span class="info-value">
+                    {{ prediction["prediction"]|title }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Confidence
+                </span>
+
+                <span class="info-value">
+                    {{ "%.2f"|format(
+                        prediction["confidence"]
+                    ) }}%
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    Analyzed
+                </span>
+
+                <span class="info-value">
+                    {{ prediction["created_at"] }}
+                </span>
+
+            </div>
+
+
+            <div class="actions">
+
+                <a
+                    href="{{ url_for('predict') }}"
+                    class="action-primary"
+                >
+
+                    🔍 Analyze Another
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('history') }}"
+                    class="action-secondary"
+                >
+
+                    📋 History
+
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         RECOMMENDATIONS
+    ========================= -->
+
+    <section class="card recommendation-card">
+
+        <div class="card-header">
+
+            <h2>
+                🧭 Handling and Prevention
+            </h2>
+
+            <p>
+                Practical next steps for this prediction.
+            </p>
+
+        </div>
+
+        {% if prediction["prediction"] == "healthy" %}
+
+            <div class="recommendation-grid">
+                <div class="recommendation-item">
+                    <h3>How to handle it</h3>
+                    <ul>
+                        <li>Continue regular inspection of new and older leaves.</li>
+                        <li>Remove badly damaged or dead leaves with clean tools.</li>
+                        <li>Keep the plant well watered without leaving the soil waterlogged.</li>
+                    </ul>
+                </div>
+                <div class="recommendation-item">
+                    <h3>How to prevent disease</h3>
+                    <ul>
+                        <li>Use clean planting material and disinfect tools between plants.</li>
+                        <li>Maintain good spacing, drainage, and airflow.</li>
+                        <li>Check the underside of leaves regularly for early symptoms.</li>
+                    </ul>
+                </div>
+            </div>
+
+        {% elif prediction["prediction"] == "cordana" %}
+
+            <div class="recommendation-grid">
+                <div class="recommendation-item">
+                    <h3>How to handle Cordana</h3>
+                    <ul>
+                        <li>Remove infected leaves and destroy them away from the plantation.</li>
+                        <li>Disinfect cutting tools after each plant.</li>
+                        <li>Improve airflow and avoid wetting leaves during irrigation.</li>
+                    </ul>
+                </div>
+                <div class="recommendation-item">
+                    <h3>How to prevent Cordana</h3>
+                    <ul>
+                        <li>Use healthy planting material and keep plants properly spaced.</li>
+                        <li>Clear fallen infected leaves from around the plant.</li>
+                        <li>Monitor during warm, humid, and rainy periods.</li>
+                    </ul>
+                </div>
+            </div>
+
+        {% elif prediction["prediction"] == "panama" %}
+
+            <div class="recommendation-grid">
+                <div class="recommendation-item">
+                    <h3>How to handle Panama disease</h3>
+                    <ul>
+                        <li>Isolate suspected plants and avoid moving soil, water, or tools from them.</li>
+                        <li>Remove and dispose of infected plants according to local agricultural guidance.</li>
+                        <li>Do not replant susceptible bananas in contaminated soil.</li>
+                    </ul>
+                </div>
+                <div class="recommendation-item">
+                    <h3>How to prevent Panama disease</h3>
+                    <ul>
+                        <li>Use certified, disease-free planting material.</li>
+                        <li>Clean footwear, tools, and equipment before entering other fields.</li>
+                        <li>Use tolerant or resistant cultivars recommended for your area.</li>
+                    </ul>
+                </div>
+            </div>
+
+        {% elif prediction["prediction"] == "sigatoka" %}
+
+            <div class="recommendation-grid">
+                <div class="recommendation-item">
+                    <h3>How to handle Sigatoka</h3>
+                    <ul>
+                        <li>Remove leaves with extensive lesions and dispose of them safely.</li>
+                        <li>Reduce leaf wetness by improving drainage and avoiding overhead irrigation.</li>
+                        <li>Ask a local agricultural expert about an approved fungicide program.</li>
+                    </ul>
+                </div>
+                <div class="recommendation-item">
+                    <h3>How to prevent Sigatoka</h3>
+                    <ul>
+                        <li>Maintain good spacing and airflow between plants.</li>
+                        <li>Remove fallen infected leaves and control weeds around plants.</li>
+                        <li>Scout regularly so treatment begins before severe leaf loss.</li>
+                    </ul>
+                </div>
+            </div>
+
+        {% else %}
+
+            <div class="recommendation-item">
+                <h3>General handling and prevention</h3>
+                <ul>
+                    <li>Separate the affected plant and inspect nearby plants.</li>
+                    <li>Remove severely damaged leaves with disinfected tools.</li>
+                    <li>Use clean planting material, good drainage, and adequate airflow.</li>
+                    <li>Contact a local plant-health specialist for confirmation and treatment advice.</li>
+                </ul>
+            </div>
+
+        {% endif %}
+
+        <div class="recommendation-note">
+            ⚠️ This AI result is a screening aid, not a laboratory diagnosis. Confirm serious or spreading symptoms with a local agricultural extension officer before applying any pesticide or fungicide.
+        </div>
+
+    </section>
+
+    <div class="footer">
+
+        🌳 BananaGuard·
+        AI-assisted banana leaf disease detection
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

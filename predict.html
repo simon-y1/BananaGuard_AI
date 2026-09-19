@@ -1,0 +1,2458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Disease Detection | BananaGuard </title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f8f2;
+            color: #25352a;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #173f20,
+                    #205b2b
+                );
+
+            color: white;
+
+            padding: 28px 18px;
+
+            z-index: 10;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 0 10px;
+
+            margin-bottom: 45px;
+        }
+
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 14px;
+
+            background: #d9ef39;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+        }
+
+
+        .logo-text h2 {
+            font-size: 18px;
+        }
+
+
+        .logo-text p {
+            font-size: 11px;
+            color: #b9d7bb;
+            margin-top: 3px;
+        }
+
+
+        .nav-title {
+            font-size: 10px;
+
+            color: #9bc39e;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            margin: 0 12px 12px;
+        }
+
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .nav a {
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 14px;
+
+            color: #dcebdc;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            transition: .2s;
+        }
+
+
+        .nav a:hover {
+            background: rgba(255,255,255,.1);
+        }
+
+
+        .nav a.active {
+            background: #d9ef39;
+            color: #183c1d;
+
+            font-weight: 700;
+        }
+
+
+        .nav-icon {
+            width: 22px;
+            text-align: center;
+        }
+
+
+        .sidebar-bottom {
+            position: absolute;
+
+            bottom: 25px;
+
+            left: 25px;
+            right: 25px;
+
+            border-top:
+                1px solid rgba(255,255,255,.12);
+
+            padding-top: 18px;
+        }
+
+
+        .user-mini {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #d9ef39;
+
+            color: #183c1d;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .user-mini strong {
+            font-size: 13px;
+        }
+
+
+        .user-mini span {
+            display: block;
+
+            color: #a9c8ab;
+
+            font-size: 10px;
+
+            margin-top: 2px;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            padding: 30px 40px;
+        }
+
+
+        .topbar {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 28px;
+        }
+
+
+        .title h1 {
+            color: #183c1d;
+
+            font-size: 27px;
+        }
+
+
+        .title p {
+            color: #758276;
+
+            font-size: 13px;
+
+            margin-top: 5px;
+        }
+
+
+        .back {
+            color: #4d714f;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================
+           UPLOAD CARD
+        ========================= */
+
+        .upload-card {
+            background: white;
+
+            border: 1px solid #e3eade;
+
+            border-radius: 18px;
+
+            padding: 35px;
+
+            box-shadow:
+                0 10px 30px rgba(40,70,40,.06);
+        }
+
+
+        .upload-header {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .upload-icon {
+            width: 70px;
+            height: 70px;
+
+            border-radius: 20px;
+
+            background: #edf6d3;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 34px;
+
+            margin: 0 auto 15px;
+        }
+
+
+        .upload-header h2 {
+            color: #28452d;
+
+            font-size: 21px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .upload-header p {
+            color: #7b877c;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           DROP ZONE
+        ========================= */
+
+        .drop-zone {
+
+            border: 2px dashed #b8cdb8;
+
+            border-radius: 15px;
+
+            padding: 45px 25px;
+
+            text-align: center;
+
+            background: #fafcf8;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+            position: relative;
+        }
+
+
+        .drop-zone:hover {
+            border-color: #6fa53a;
+
+            background: #f6faee;
+        }
+
+
+        .drop-zone.dragover {
+            border-color: #6fa53a;
+
+            background: #edf6d3;
+        }
+
+
+        .drop-zone input {
+            display: none;
+        }
+
+
+        .drop-icon {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .drop-zone h3 {
+            color: #344c38;
+
+            font-size: 15px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .drop-zone p {
+            color: #8a958b;
+
+            font-size: 11px;
+        }
+
+
+        .browse {
+            color: #4d8b3e;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           IMAGE PREVIEW
+        ========================= */
+
+        .preview-container {
+            display: none;
+
+            margin-top: 22px;
+
+            text-align: center;
+        }
+
+
+        .preview-container img {
+            display: block;
+            width: min(100%, 420px);
+            height: 280px;
+            margin: 0 auto;
+            object-fit: contain;
+
+            border-radius: 13px;
+
+            border: 1px solid #e0e7dd;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,.08);
+        }
+
+
+        .file-name {
+            color: #69776b;
+
+            font-size: 11px;
+
+            margin-top: 8px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .predict-button {
+            border: none;
+
+            padding: 11px 16px;
+
+            border-radius: 10px;
+
+            background: #285d2e;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: background .2s, color .2s, box-shadow .2s, transform .2s;
+        }
+
+
+        .predict-button:hover {
+            background: #173f20;
+
+            transform: translateY(-1px);
+
+            box-shadow: 0 7px 16px rgba(23, 63, 32, .18);
+        }
+
+
+        .predict-button:active {
+            transform: translateY(1px) scale(.98);
+            box-shadow: none;
+        }
+
+
+        .predict-button:focus-visible,
+        .browse:focus-visible,
+        .result-actions a:focus-visible,
+        .back:focus-visible {
+            outline: 3px solid rgba(217, 239, 57, .85);
+            outline-offset: 3px;
+        }
+
+
+        .predict-button:disabled {
+            cursor: wait;
+            opacity: .65;
+            transform: none;
+            box-shadow: none;
+        }
+
+
+        .analyze-button {
+            display: block;
+            width: fit-content;
+            min-width: 190px;
+            margin: 24px auto 0;
+            padding: 13px 22px;
+            background: #285d2e;
+        }
+
+
+        .camera-controls .predict-button {
+            flex: 0 1 auto;
+            min-width: 132px;
+            margin-top: 0;
+        }
+
+
+        .browse {
+            display: inline-block;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background .2s, color .2s, transform .2s;
+        }
+
+
+        .browse:hover {
+            color: #285d2e;
+            background: #edf6d3;
+            transform: translateY(-1px);
+        }
+
+
+        /* =========================
+           RESULT
+        ========================= */
+
+        .result {
+            margin-top: 25px;
+
+            background: white;
+
+            border: 1px solid #e3eade;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 10px 30px rgba(40,70,40,.06);
+        }
+
+
+        .result-title {
+            text-align: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .result-title span {
+            display: inline-block;
+
+            background: #edf6d3;
+
+            color: #527833;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .result-title h2 {
+            color: #203b25;
+
+            font-size: 26px;
+        }
+
+
+        .uploaded-image {
+            margin: 18px auto 22px;
+        }
+
+
+        .uploaded-image img {
+            display: block;
+            width: min(100%, 520px);
+            height: 320px;
+            margin: 0 auto;
+            object-fit: contain;
+            border-radius: 14px;
+            border: 1px solid #e0e7dd;
+            background: #f5f8f2;
+        }
+
+
+        .confidence {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+
+        .confidence-number {
+            font-size: 38px;
+
+            font-weight: 800;
+
+            color: #4f8739;
+        }
+
+
+        .confidence p {
+            color: #7b877c;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================
+           PROBABILITIES
+        ========================= */
+
+        .probability-title {
+            color: #304a34;
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .probability {
+            margin-bottom: 18px;
+        }
+
+
+        .prob-info {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 7px;
+        }
+
+
+        .prob-name {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #445347;
+        }
+
+
+        .prob-value {
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #557158;
+        }
+
+
+        .prob-bar {
+            height: 9px;
+
+            background: #edf1eb;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+
+        .prob-fill {
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #6fa53a,
+                    #c7e238
+                );
+        }
+
+
+        /* =========================
+           RESULT ACTIONS
+        ========================= */
+
+        .result-actions {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .result-actions a {
+            flex: 1;
+
+            text-align: center;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            transition: background .2s, color .2s, transform .2s, box-shadow .2s;
+        }
+
+
+        .result-actions a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 16px rgba(23, 63, 32, .12);
+        }
+
+
+        .history-button {
+            background: #edf3e9;
+
+            color: #416145;
+        }
+
+
+        .new-button {
+            background: #285d2e;
+
+            color: white;
+        }
+
+
+        /* =========================
+           INFORMATION
+        ========================= */
+
+        .info {
+            margin-top: 20px;
+
+            background: #eef6e8;
+
+            border-radius: 12px;
+
+            padding: 16px;
+
+            font-size: 11px;
+
+            color: #617361;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            .sidebar {
+                position: relative;
+
+                width: 100%;
+
+                height: auto;
+
+                padding: 15px;
+            }
+
+
+            .logo {
+                margin-bottom: 18px;
+            }
+
+
+            .nav {
+                flex-direction: row;
+
+                overflow-x: auto;
+            }
+
+
+            .nav-title,
+            .sidebar-bottom {
+                display: none;
+            }
+
+
+            .nav a {
+                white-space: nowrap;
+            }
+
+
+            .main {
+                margin-left: 0;
+
+                padding: 22px 16px;
+            }
+
+
+            .upload-card,
+            .result {
+                padding: 22px;
+            }
+
+
+            .topbar {
+                gap: 10px;
+            }
+
+        }
+/* ================================
+   CAMERA CARD
+================================ */
+
+.camera-card {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e1e8d9;
+    border-radius: 22px;
+    padding: 25px;
+    margin-top: 20px;
+
+    box-shadow: 0 10px 30px rgba(50, 80, 30, 0.08);
+}
+
+.camera-header h3 {
+    margin: 0;
+    color: #304526;
+    font-size: 20px;
+}
+
+.camera-header p {
+    margin-top: 6px;
+    color: #7d8877;
+    font-size: 13px;
+}
+
+
+/* CAMERA VIEW */
+
+.camera-container {
+    position: relative;
+
+    width: 100%;
+    max-width: 600px;
+
+    margin: 20px auto;
+
+    background: #111;
+
+    border-radius: 18px;
+    overflow: hidden;
+
+    min-height: 250px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cameraPreview {
+    width: 100%;
+    max-height: 450px;
+
+    object-fit: cover;
+
+    display: none;
+}
+
+#cameraCanvas {
+    display: none;
+}
+
+.captured-image {
+    width: 100%;
+    max-height: 450px;
+
+    object-fit: contain;
+
+    display: none;
+}
+
+
+/* CAMERA BUTTONS */
+
+.camera-buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    justify-content: center;
+}
+
+.camera-btn {
+    border: none;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.camera-btn:hover {
+    transform: translateY(-2px);
+}
+
+.camera-btn.primary {
+    background: linear-gradient(135deg, #76a83d, #4d812f);
+    color: white;
+}
+
+.camera-btn.capture {
+    background: #e4ad28;
+    color: white;
+}
+
+.camera-btn.secondary {
+    background: #e9eee5;
+    color: #45533c;
+}
+
+.camera-btn.success {
+    background: #4d8a3b;
+    color: white;
+}
+
+.camera-status {
+    text-align: center;
+
+    margin-top: 15px;
+
+    color: #7b8675;
+
+    font-size: 12px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .camera-card {
+        padding: 18px;
+    }
+
+    .camera-container {
+        min-height: 220px;
+    }
+
+    .camera-btn {
+        width: 100%;
+    }
+}
+/* ============================================
+   UPLOAD + CAMERA HORIZONTAL LAYOUT
+   ============================================ */
+
+.input-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 25px;
+}
+
+.input-method-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 2px solid rgba(76, 175, 80, 0.15);
+    border-radius: 22px;
+    padding: 24px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.input-method-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.input-method-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.input-method-description {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Camera preview */
+.camera-box {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #111;
+    position: relative;
+}
+
+.camera-box video,
+.camera-box img {
+    width: 100%;
+    height: 280px;
+    object-fit: contain;
+    display: block;
+    border-radius: 16px;
+}
+
+.camera-placeholder {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #999;
+    text-align: center;
+}
+
+.camera-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.camera-controls button {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* Make the layout responsive */
+@media (max-width: 850px) {
+    .input-methods {
+        grid-template-columns: 1fr;
+    }
+}
+     /* ==========================================
+   LANGUAGE ASSISTANCE
+========================================== */
+
+.language-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.language-selector label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #405541;
+}
+
+.language-selector select {
+    padding: 9px 14px;
+    border: 1px solid #cfdcc9;
+    border-radius: 9px;
+    background: white;
+    color: #304a34;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.language-assistance {
+    margin-top: 25px;
+    padding: 22px;
+    background: linear-gradient(
+        135deg,
+        #f1f8e8,
+        #f8fbf5
+    );
+    border: 1px solid #dce8d5;
+    border-radius: 16px;
+}
+
+.language-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.language-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #dfeec9;
+    color: #4d713f;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.language-header h3 {
+    color: #29452e;
+    font-size: 20px;
+}
+
+.speak-button {
+    border: none;
+    padding: 11px 16px;
+    border-radius: 10px;
+    background: #285d2e;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.speak-button:hover {
+    background: #173f20;
+    transform: translateY(-1px);
+}
+
+.speak-button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.amharic-description,
+.amharic-advice {
+    padding: 15px;
+    border-radius: 11px;
+    margin-top: 12px;
+    line-height: 1.8;
+}
+
+.amharic-description {
+    background: white;
+}
+
+.amharic-advice {
+    background: #e8f2df;
+}
+
+.amharic-description strong,
+.amharic-advice strong {
+    display: block;
+    color: #385b3b;
+    margin-bottom: 5px;
+    font-size: 13px;
+}
+
+.amharic-description p,
+.amharic-advice p {
+    color: #586759;
+    font-size: 13px;
+    margin: 0;
+}
+
+.language-content[data-language="am"] {
+    display: none;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     SIDEBAR
+========================= -->
+
+<aside class="sidebar">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🌳
+        </div>
+
+        <div class="logo-text">
+
+            <h2>BananaGuard AI</h2>
+
+            <p>
+                Plant Health Intelligence
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Main Menu
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="{{ url_for('profile') }}">
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            href="{{ url_for('predict') }}"
+            class="active"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            Disease Detection
+
+        </a>
+
+
+        <a href="{{ url_for('history') }}">
+
+            <span class="nav-icon">
+                📋
+            </span>
+
+            Prediction History
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="user-mini">
+
+            <div class="avatar">
+
+                {{ session["user_name"][0]|upper }}
+
+            </div>
+
+            <div>
+
+                <strong>
+                    {{ session["user_name"] }}
+                </strong>
+
+                <span>
+                    User Account
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="main">
+
+
+    <div class="topbar">
+
+        <div class="title">
+
+            <h1>
+                Disease Detection
+            </h1>
+
+            <p>
+                Upload a banana leaf image for AI analysis.
+            </p>
+
+        </div>
+
+
+        <a
+            class="back"
+            href="{{ url_for('profile') }}"
+        >
+            ← Dashboard
+        </a>
+
+    </div>
+
+  <!-- =========================
+       UPLOAD + CAMERA
+    ========================= -->
+
+    <section class="upload-card">
+
+    <div class="upload-header">
+        ...
+    </div>
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="predictionForm"
+    >
+     <!-- ========================
+     UPLOAD + CAMERA
+     ========================= -->
+
+           <!-- =========================
+               UPLOAD AND CAMERA
+           ========================= -->
+
+           <div class="input-methods">
+
+    <!-- ================= UPLOAD IMAGE ================= -->
+    <div class="input-method-card">
+
+        <div class="input-method-title">
+            📁 Upload Image
+        </div>
+
+        <div class="input-method-description">
+            Select a banana leaf image from your device.
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+
+            <div class="upload-icon">
+                📤
+            </div>
+
+            <h3>Drop your banana leaf image here</h3>
+
+            <p>or click below to browse your device</p>
+
+            <label for="imageInput" class="browse">
+                Choose Image
+            </label>
+
+            <input
+                type="file"
+                name="image"
+                id="imageInput"
+                accept="image/*"
+                required
+                hidden
+            >
+
+        </div>
+
+        <!-- Image Preview -->
+        <div class="preview-container" id="previewContainer">
+            <img id="previewImage" src="" alt="Leaf preview">
+            <div class="file-name" id="fileName"></div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= CAMERA ================= -->
+    <div class="input-method-card">
+
+        <div class="input-method-title">
+            📷 Capture from Field
+        </div>
+
+        <div class="input-method-description">
+            Take a photo of the banana leaf directly using your camera.
+        </div>
+
+        <div class="camera-box">
+
+            <video
+                id="cameraPreview"
+                autoplay
+                playsinline
+                style="display:none;"
+            ></video>
+
+            <canvas
+                id="cameraCanvas"
+                style="display:none;"
+            ></canvas>
+
+            <img
+                id="capturedImage"
+                src=""
+                alt="Captured banana leaf"
+                style="display:none;"
+            >
+
+            <div
+                id="cameraPlaceholder"
+                class="camera-placeholder"
+            >
+                <div style="font-size:50px;">📷</div>
+                <p>Camera is ready</p>
+            </div>
+
+        </div>
+
+        <div
+            id="cameraStatus"
+            style="margin-top:10px; color:#777;"
+        >
+            Click "Open Camera" to start.
+        </div>
+
+        <div class="camera-controls">
+
+            <button
+                type="button"
+                id="startCameraBtn"
+                class="predict-button"
+            >
+                📷 Open Camera
+            </button>
+
+            <button
+                type="button"
+                id="captureBtn"
+                class="predict-button"
+                style="display:none;"
+            >
+                📸 Capture Leaf
+            </button>
+
+            <button
+                type="button"
+                id="stopCameraBtn"
+                class="predict-button"
+                style="display:none;"
+            >
+                ⏹ Stop Camera
+            </button>
+
+            <button
+                type="button"
+                id="retakeBtn"
+                class="predict-button"
+                style="display:none;"
+            >
+                🔄 Retake
+            </button>
+
+            <button
+                type="button"
+                id="usePhotoBtn"
+                class="predict-button"
+                style="display:none;"
+            >
+                ✅ Use This Photo
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+            <button type="submit" class="predict-button analyze-button" id="analyzeButton">
+                🔍 Analyze Leaf with AI
+            </button>
+        </form>
+    </section>
+
+
+    {% if prediction %}
+
+
+    <!-- =========================
+         RESULT
+    ========================= -->
+
+    <section class="result">
+
+
+        <div class="result-title">
+
+            <span>
+                AI Analysis Complete
+            </span>
+            {% if image_filename %}
+
+<div class="uploaded-image">
+
+    <img
+        src="{{ url_for('static', filename='uploads/' + image_filename) }}"
+        alt="Uploaded banana leaf"
+    >
+
+</div>
+
+
+
+{% endif %}
+
+            <h2>
+    {{ prediction|title }}
+</h2>
+
+<!-- LANGUAGE SELECTION -->
+<div class="language-selector">
+    <label for="languageSelect">
+        🌐 Language
+    </label>
+
+    <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="am">አማርኛ</option>
+    </select>
+</div>
+
+        </div>
+
+
+        <div class="confidence">
+
+            <div class="confidence-number">
+
+                {{ "%.2f"|format(confidence) }}%
+
+            </div>
+
+            <p>
+                Model confidence
+            </p>
+
+        </div>
+
+
+            <!-- =========================
+     LANGUAGE ASSISTANCE
+========================= -->
+
+<div class="language-assistance" id="languageAssistance">
+
+    <div class="language-content" data-language="en">
+        <div class="language-header">
+            <div>
+                <span class="language-badge">English</span>
+
+                <h3 id="englishDiseaseName">
+                    {{ english_info.name }}
+                </h3>
+            </div>
+
+            <button
+                type="button"
+                class="speak-button"
+                data-language="en"
+            >
+                🔊 Listen
+            </button>
+        </div>
+
+        <div class="amharic-description">
+            <strong>Symptoms</strong>
+
+            <p id="englishDescription">
+                {{ english_info.description }}
+            </p>
+        </div>
+
+        <div class="amharic-advice">
+            <strong>💡 Recommendation</strong>
+
+            <p id="englishAdvice">
+                {{ english_info.advice }}
+            </p>
+        </div>
+    </div>
+
+    <div class="language-content" data-language="am">
+        <div>
+            <div class="language-header">
+                <div>
+                    <span class="language-badge">🇪🇹 አማርኛ</span>
+
+                    <h3 id="amharicDiseaseName">
+                        {{ amharic_info.name }}
+                    </h3>
+                </div>
+
+                <button
+                    type="button"
+                    id="speakButton"
+                    class="speak-button"
+                    data-language="am"
+                >
+                    🔊 አዳምጥ
+                </button>
+            </div>
+
+            <div class="amharic-description">
+                <strong>ምልክቶች</strong>
+
+                <p id="amharicDescription">
+                    {{ amharic_info.description }}
+                </p>
+            </div>
+
+            <div class="amharic-advice">
+                <strong>💡 ምክር</strong>
+
+                <p id="amharicAdvice">
+                    {{ amharic_info.advice }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+        <h3 class="probability-title">
+            📊 Prediction Probabilities
+        </h3>
+
+
+        <!-- CORDANA -->
+
+        <div class="probability">
+
+            <div class="prob-info">
+
+                <span class="prob-name">
+                    Cordana
+                </span>
+
+                <span class="prob-value">
+                    {{ "%.2f"|format(probabilities["Cordana"]) }}%
+                </span>
+
+            </div>
+
+
+            <div class="prob-bar">
+
+                <div
+                    class="prob-fill"
+                    data-width="{{ probabilities['Cordana'] }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HEALTHY -->
+
+        <div class="probability">
+
+            <div class="prob-info">
+
+                <span class="prob-name">
+                    Healthy
+                </span>
+
+                <span class="prob-value">
+                    {{ "%.2f"|format(probabilities["Healthy"]) }}%
+                </span>
+
+            </div>
+
+
+            <div class="prob-bar">
+
+                <div
+                    class="prob-fill"
+                    data-width="{{ probabilities['Healthy'] }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+            <!-- PANAMA -->
+
+        <div class="probability">
+
+            <div class="prob-info">
+
+                <span class="prob-name">
+                    Panama
+                </span>
+
+                <span class="prob-value">
+                    {{ "%.2f"|format(probabilities["Panama"]) }}%
+                </span>
+
+            </div>
+
+
+            <div class="prob-bar">
+
+                <div
+                    class="prob-fill"
+                    data-width="{{ probabilities['Panama'] }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SIGATOKA -->
+
+        <div class="probability">
+
+            <div class="prob-info">
+
+                <span class="prob-name">
+                    Sigatoka
+                </span>
+
+                <span class="prob-value">
+                    {{ "%.2f"|format(probabilities["Sigatoka"]) }}%
+                </span>
+
+            </div>
+
+
+            <div class="prob-bar">
+
+                <div
+                    class="prob-fill"
+                    data-width="{{ probabilities['Sigatoka'] }}%"
+                ></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="info">
+
+            💡 <strong>Important:</strong>
+            The prediction is generated by the
+            EfficientNetB0 model. The confidence score
+            represents the model's probability for the
+            predicted class and should be used as an
+            AI-assisted indication rather than a
+            replacement for expert agricultural diagnosis.
+
+        </div>
+
+
+        <div class="result-actions">
+
+            <a
+                href="{{ url_for('history') }}"
+                class="history-button"
+            >
+                📋 View History
+            </a>
+
+
+            <a
+                href="{{ url_for('predict') }}"
+                class="new-button"
+            >
+                🔄 Analyze Another
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+    {% endif %}
+
+
+</main>
+
+<script>
+    document.querySelectorAll("[data-width]").forEach(element => {
+        element.style.width = element.dataset.width;
+    });
+</script>
+
+<script>
+
+    /* =========================
+       ELEMENTS
+    ========================= */
+
+    const imageInput =
+        document.getElementById("imageInput");
+
+    const previewContainer =
+        document.getElementById("previewContainer");
+
+    const previewImage =
+        document.getElementById("previewImage");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const predictionForm =
+        document.getElementById("predictionForm");
+
+    const predictButton =
+        document.querySelector("button[type='submit']");
+
+    const dropZone =
+        document.getElementById("dropZone");
+
+
+    /* =========================
+       IMAGE PREVIEW
+    ========================= */
+
+    imageInput.addEventListener(
+        "change",
+        function () {
+
+            const file = this.files[0];
+
+            if (!file) {
+                return;
+            }
+
+
+            /* Show filename */
+
+            fileName.textContent =
+                file.name;
+
+
+            /* Create preview */
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function (event) {
+
+                    previewImage.src =
+                        event.target.result;
+
+                    previewContainer.style.display =
+                        "block";
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+
+    /* =========================
+       DRAG AND DROP
+    ========================= */
+
+    dropZone.addEventListener(
+        "dragover",
+        function (event) {
+
+            event.preventDefault();
+
+            dropZone.classList.add(
+                "dragover"
+            );
+
+        }
+    );
+
+
+    dropZone.addEventListener(
+        "dragleave",
+        function () {
+
+            dropZone.classList.remove(
+                "dragover"
+            );
+
+        }
+    );
+
+
+    dropZone.addEventListener(
+        "drop",
+        function (event) {
+
+            event.preventDefault();
+
+            dropZone.classList.remove(
+                "dragover"
+            );
+
+
+            const files =
+                event.dataTransfer.files;
+
+
+            if (files.length > 0) {
+
+                imageInput.files =
+                    files;
+
+                imageInput.dispatchEvent(
+                    new Event("change")
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       FORM SUBMISSION
+    ========================= */
+
+    predictionForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            /*
+             * IMPORTANT:
+             * Prevent normal browser reload.
+             */
+
+            event.preventDefault();
+
+
+            const file =
+                imageInput.files[0];
+
+
+            if (!file) {
+
+                alert(
+                    "Please select a banana leaf image first."
+                );
+
+                return;
+
+            }
+
+
+            /* =========================
+               SHOW LOADING STATE
+            ========================= */
+
+            predictButton.disabled = true;
+
+            predictButton.setAttribute("aria-busy", "true");
+
+            predictButton.innerHTML =
+                "⏳ Analyzing leaf with AI...";
+
+
+            predictButton.style.opacity =
+                "0.7";
+
+
+            /*
+             * Keep the selected image visible.
+             */
+
+            previewContainer.style.display =
+                "block";
+
+
+            /* =========================
+               SEND IMAGE TO FLASK
+            ========================= */
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "image",
+                file
+            );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "{{ url_for('predict') }}",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+
+                /*
+                 * Flask normally returns
+                 * the complete HTML page.
+                 */
+
+                const html =
+                    await response.text();
+
+
+                /*
+                 * Replace the current page
+                 * with Flask's result.
+                 */
+
+                document.open();
+
+                document.write(html);
+
+                document.close();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Prediction error:",
+                    error
+                );
+
+
+                alert(
+                    "Something went wrong while analyzing the image."
+                );
+
+
+                /*
+                 * Restore button.
+                 */
+
+                predictButton.disabled =
+                    false;
+
+                predictButton.removeAttribute("aria-busy");
+
+                predictButton.innerHTML =
+                    "🔍 Analyze Leaf with AI";
+
+                predictButton.style.opacity =
+                    "1";
+
+            }
+
+        }
+    );
+
+</script>
+
+<script>
+// ================= CAMERA =================
+
+const startCameraBtn = document.getElementById("startCameraBtn");
+const stopCameraBtn = document.getElementById("stopCameraBtn");
+const captureBtn = document.getElementById("captureBtn");
+const retakeBtn = document.getElementById("retakeBtn");
+const usePhotoBtn = document.getElementById("usePhotoBtn");
+
+const cameraPreview = document.getElementById("cameraPreview");
+const cameraCanvas = document.getElementById("cameraCanvas");
+const capturedImage = document.getElementById("capturedImage");
+const cameraPlaceholder = document.getElementById("cameraPlaceholder");
+const cameraStatus = document.getElementById("cameraStatus");
+
+let cameraStream = null;
+
+
+// ================= OPEN CAMERA =================
+
+async function startCamera() {
+
+    try {
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error("camera_unavailable");
+        }
+
+        stopCameraStream();
+
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: {
+                facingMode: "environment"
+            },
+            audio: false
+        });
+
+        cameraPreview.srcObject = cameraStream;
+
+        cameraPreview.style.display = "block";
+        cameraPlaceholder.style.display = "none";
+        capturedImage.style.display = "none";
+
+        startCameraBtn.style.display = "none";
+        stopCameraBtn.style.display = "inline-block";
+
+        captureBtn.style.display = "inline-block";
+        retakeBtn.style.display = "none";
+        usePhotoBtn.style.display = "none";
+
+        cameraStatus.textContent = "Camera is active. Position the banana leaf and capture it.";
+
+    } catch (error) {
+
+        console.error("Camera error:", error);
+
+        stopCameraStream();
+
+        if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
+            cameraStatus.textContent =
+                "Camera permission was denied. Allow camera access in your browser settings and try again.";
+        } else if (error.name === "NotFoundError" || error.message === "camera_unavailable") {
+            cameraStatus.textContent =
+                "No camera is available. Check that your device has a camera and try again.";
+        } else if (error.name === "NotReadableError") {
+            cameraStatus.textContent =
+                "The camera is already in use by another application.";
+        } else {
+            cameraStatus.textContent =
+                "Unable to access the camera. Use HTTPS or localhost and check browser permissions.";
+        }
+
+        startCameraBtn.style.display = "inline-block";
+        stopCameraBtn.style.display = "none";
+        captureBtn.style.display = "none";
+
+    }
+}
+
+startCameraBtn.addEventListener("click", startCamera);
+
+
+// ================= STOP MEDIA STREAM =================
+
+function stopCameraStream() {
+
+    if (cameraStream) {
+
+        cameraStream.getTracks().forEach(track => track.stop());
+        cameraStream = null;
+    }
+
+    cameraPreview.srcObject = null;
+
+}
+
+
+// ================= STOP CAMERA =================
+
+stopCameraBtn.addEventListener("click", () => {
+
+    stopCamera();
+
+});
+
+
+// ================= STOP CAMERA FUNCTION =================
+
+function stopCamera() {
+
+    stopCameraStream();
+
+    cameraPreview.style.display = "none";
+
+    cameraPlaceholder.style.display = "block";
+
+    capturedImage.style.display = "none";
+
+    startCameraBtn.style.display = "inline-block";
+    stopCameraBtn.style.display = "none";
+
+    captureBtn.style.display = "none";
+    retakeBtn.style.display = "none";
+    usePhotoBtn.style.display = "none";
+
+    cameraStatus.textContent =
+        'Camera stopped. Click "Open Camera" to start again.';
+}
+
+
+// ================= CAPTURE PHOTO =================
+
+captureBtn.addEventListener("click", () => {
+
+    if (!cameraStream) {
+        return;
+    }
+
+    const width = cameraPreview.videoWidth;
+    const height = cameraPreview.videoHeight;
+
+    if (!width || !height) {
+        cameraStatus.textContent = "The camera is still loading. Try again in a moment.";
+        return;
+    }
+
+    cameraCanvas.width = width;
+    cameraCanvas.height = height;
+
+    const context = cameraCanvas.getContext("2d");
+
+    context.drawImage(
+        cameraPreview,
+        0,
+        0,
+        width,
+        height
+    );
+
+    const imageData = cameraCanvas.toDataURL("image/jpeg", 0.9);
+
+    capturedImage.src = imageData;
+    capturedImage.style.display = "block";
+
+    stopCameraStream();
+    cameraPreview.style.display = "none";
+
+    captureBtn.style.display = "none";
+    stopCameraBtn.style.display = "none";
+    retakeBtn.style.display = "inline-block";
+    usePhotoBtn.style.display = "inline-block";
+
+    cameraStatus.textContent =
+        "Photo captured. You can retake it or use this photo.";
+
+});
+
+
+// ================= RETAKE =================
+
+retakeBtn.addEventListener("click", async () => {
+
+    capturedImage.style.display = "none";
+    usePhotoBtn.style.display = "none";
+    await startCamera();
+
+});
+
+
+// ================= USE PHOTO =================
+
+usePhotoBtn.addEventListener("click", () => {
+
+    cameraCanvas.toBlob((blob) => {
+        if (!blob) {
+            cameraStatus.textContent =
+                "The photo could not be prepared. Please capture it again.";
+            return;
+        }
+
+        const capturedFile = new File(
+            [blob],
+            "camera-capture.jpg",
+            { type: "image/jpeg" }
+        );
+        const transfer = new DataTransfer();
+
+        transfer.items.add(capturedFile);
+        imageInput.files = transfer.files;
+        previewImage.src = capturedImage.src;
+        fileName.textContent = capturedFile.name;
+        previewContainer.style.display = "block";
+
+        cameraStatus.textContent =
+            "Photo selected. Ready for AI analysis.";
+    }, "image/jpeg", 0.9);
+
+    // Keep the captured image visible
+    capturedImage.style.display = "block";
+
+    stopCameraStream();
+
+    cameraPreview.style.display = "none";
+
+    stopCameraBtn.style.display = "none";
+    startCameraBtn.style.display = "inline-block";
+
+    captureBtn.style.display = "none";
+    retakeBtn.style.display = "inline-block";
+
+});
+
+// ======================================
+// CLEAN UP WHEN LEAVING PAGE
+// ======================================
+
+window.addEventListener(
+    "beforeunload",
+    stopCamera
+);
+</script>
+
+<script>
+/* ==========================================
+   AMHARIC VOICE ASSISTANCE
+========================================== */
+
+const languageSelect = document.getElementById("languageSelect");
+const languageContents = document.querySelectorAll(".language-content");
+const speakButtons = document.querySelectorAll(".speak-button");
+
+function showLanguage(language) {
+    languageContents.forEach((content) => {
+        content.style.display =
+            content.dataset.language === language ? "block" : "none";
+    });
+}
+
+if (languageSelect) {
+    const savedLanguage = localStorage.getItem("preferredLanguage");
+
+    if (savedLanguage === "en" || savedLanguage === "am") {
+        languageSelect.value = savedLanguage;
+    }
+
+    languageSelect.addEventListener("change", function () {
+        localStorage.setItem("preferredLanguage", languageSelect.value);
+        showLanguage(languageSelect.value);
+
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+        }
+    });
+    showLanguage(languageSelect.value);
+}
+
+speakButtons.forEach((speakButton) => {
+    speakButton.addEventListener("click", function () {
+
+        if (!("speechSynthesis" in window)) {
+
+            alert(
+                "Your browser does not support voice assistance."
+            );
+
+            return;
+        }
+
+        const synthesis = window.speechSynthesis;
+
+        // Reset and resume the browser speech engine before speaking.
+        synthesis.cancel();
+        synthesis.resume();
+
+        const content = speakButton.closest(".language-content");
+        const text =
+            content.querySelector("h3").textContent.trim() +
+            ". " +
+            content.querySelector(".amharic-description p").textContent.trim() +
+            ". " +
+            content.querySelector(".amharic-advice p").textContent.trim();
+
+        const language = content.dataset.language;
+
+        const speech =
+            new SpeechSynthesisUtterance(text);
+
+        const voices = synthesis.getVoices();
+        const preferredVoice = voices.find((voice) =>
+            voice.lang.toLowerCase().startsWith(language === "am" ? "am" : "en")
+        );
+
+        if (preferredVoice) {
+            speech.voice = preferredVoice;
+            speech.lang = preferredVoice.lang;
+        } else {
+            speech.lang = language === "am" ? "am-ET" : "en-US";
+        }
+
+        speech.rate = 0.85;
+        speech.pitch = 1.0;
+        speech.volume = 1.0;
+
+        speech.onstart = function () {
+
+            speakButton.disabled = true;
+
+            speakButton.innerHTML =
+                language === "am" ?
+                    "🔊 እየተናገረ ነው..." :
+                    "🔊 Speaking...";
+        };
+
+        speech.onend = function () {
+
+            speakButton.disabled = false;
+
+            speakButton.innerHTML = language === "am" ?
+                "🔊 አዳምጥ" : "🔊 Listen";
+        };
+
+        speech.onerror = function (event) {
+
+            console.error(
+                "Speech error:",
+                event
+            );
+
+            speakButton.disabled = false;
+
+            speakButton.innerHTML = language === "am" ?
+                "🔊 አዳምጥ" : "🔊 Listen";
+
+            alert(language === "am" ?
+                "የአማርኛ ድምፅ አልተገኘም። እባክዎ በሌላ አሳሽ ይሞክሩ።" :
+                "English voice is not available on this device/browser.");
+        };
+
+        synthesis.speak(speech);
+
+    });
+});
+
+if ("speechSynthesis" in window) {
+    window.speechSynthesis.onvoiceschanged = function () {
+        window.speechSynthesis.getVoices();
+    };
+}
+</script>
+
+
+</body>
+
+</html>

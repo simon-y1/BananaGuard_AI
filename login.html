@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in | BananaGuard </title>
+
+    <style>
+        :root {
+            --forest: #173f20;
+            --leaf: #285d2e;
+            --lime: #d9ef39;
+            --ink: #203326;
+            --muted: #718076;
+            --line: #dfe8dc;
+            --paper: #ffffff;
+            --wash: #f4f8f0;
+            --danger: #a34b45;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            padding: 24px;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 15%, rgba(217, 239, 57, .24), transparent 28%),
+                linear-gradient(135deg, #eef6e9 0%, #f9fbf7 52%, #e3f0df 100%);
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        .login-shell {
+            display: grid;
+            grid-template-columns: minmax(260px, .9fr) minmax(320px, 1.1fr);
+            width: min(920px, 100%);
+            min-height: 560px;
+            overflow: hidden;
+            background: var(--paper);
+            border: 1px solid rgba(23, 63, 32, .08);
+            border-radius: 24px;
+            box-shadow: 0 24px 70px rgba(23, 63, 32, .14);
+            animation: arrive .55s ease both;
+        }
+
+        .brand-panel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 42px;
+            overflow: hidden;
+            color: white;
+            background: linear-gradient(155deg, var(--forest), #2e7137);
+        }
+
+        .brand-panel::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -90px;
+            bottom: -90px;
+            border: 28px solid rgba(217, 239, 57, .2);
+            border-radius: 50%;
+        }
+
+        .brand-mark {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            margin-bottom: 42px;
+            color: var(--forest);
+            background: var(--lime);
+            border-radius: 16px;
+            font-size: 28px;
+        }
+
+        .brand-panel h1 {
+            max-width: 260px;
+            margin: 0 0 14px;
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: .98;
+            letter-spacing: 0;
+        }
+
+        .brand-panel p {
+            max-width: 260px;
+            margin: 0;
+            color: #d7e8d7;
+            font: 14px/1.6 Arial, sans-serif;
+        }
+
+        .plant-note {
+            position: relative;
+            z-index: 1;
+            color: #c9e3c9;
+            font: 11px/1.5 Arial, sans-serif;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .form-panel {
+            display: flex;
+            align-items: center;
+            padding: 48px clamp(28px, 6vw, 70px);
+        }
+
+        .form-wrap { width: 100%; max-width: 370px; margin: auto; }
+
+        .eyebrow {
+            margin: 0 0 10px;
+            color: var(--leaf);
+            font: 700 11px Arial, sans-serif;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        h2 { margin: 0; font-size: 32px; }
+
+        .subtitle {
+            margin: 10px 0 28px;
+            color: var(--muted);
+            font: 14px/1.5 Arial, sans-serif;
+        }
+
+        .alert {
+            margin: 0 0 20px;
+            padding: 12px 14px;
+            color: var(--danger);
+            background: #fff1ef;
+            border-left: 3px solid var(--danger);
+            border-radius: 8px;
+            font: 13px/1.4 Arial, sans-serif;
+        }
+
+        .field { margin-bottom: 19px; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font: 700 12px Arial, sans-serif;
+        }
+
+        .input-wrap { position: relative; }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            color: var(--ink);
+            background: #fbfdf9;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            outline: none;
+            font: 14px Arial, sans-serif;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+        }
+
+        input:focus {
+            background: white;
+            border-color: var(--leaf);
+            box-shadow: 0 0 0 4px rgba(40, 93, 46, .11);
+        }
+
+        input.invalid { border-color: var(--danger); }
+
+        #password { padding-right: 76px; }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            padding: 6px;
+            color: var(--leaf);
+            background: transparent;
+            border: 0;
+            cursor: pointer;
+            transform: translateY(-50%);
+            font: 700 11px Arial, sans-serif;
+        }
+
+        .field-message, .caps-warning {
+            display: block;
+            min-height: 16px;
+            margin-top: 6px;
+            color: var(--danger);
+            font: 11px Arial, sans-serif;
+        }
+
+        .caps-warning { color: #8b6b20; }
+
+        .submit-button {
+            width: 100%;
+            margin-top: 4px;
+            padding: 15px;
+            color: var(--forest);
+            background: var(--lime);
+            border: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            font: 700 13px Arial, sans-serif;
+            transition: transform .2s, background .2s, box-shadow .2s;
+        }
+
+        .submit-button:hover { background: #e4f755; box-shadow: 0 8px 18px rgba(117, 145, 32, .2); transform: translateY(-1px); }
+        .submit-button:disabled { cursor: wait; opacity: .7; transform: none; }
+
+        .create-account {
+            margin: 24px 0 0;
+            color: var(--muted);
+            text-align: center;
+            font: 13px Arial, sans-serif;
+        }
+
+        .create-account a { color: var(--leaf); font-weight: 700; }
+
+        @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 680px) {
+            body { padding: 12px; }
+            .login-shell { grid-template-columns: 1fr; min-height: auto; }
+            .brand-panel { min-height: 220px; padding: 28px; }
+            .brand-mark { margin-bottom: 24px; }
+            .brand-panel h1 { font-size: 34px; }
+            .plant-note { margin-top: 30px; }
+            .form-panel { padding: 34px 26px 38px; }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-shell">
+        <section class="brand-panel" aria-label="BananaGuard AI introduction">
+            <div>
+                <div class="brand-mark" aria-hidden="true">🌳</div>
+                <h1>See the leaf more clearly.</h1>
+                <p>BananaGuard AI helps you turn a single leaf image into a thoughtful health signal.</p>
+            </div>
+            <div class="plant-note">Plant health intelligence</div>
+        </section>
+
+        <section class="form-panel">
+            <div class="form-wrap">
+                <p class="eyebrow">Welcome back</p>
+                <h2>Sign in</h2>
+                <p class="subtitle">Continue to your banana leaf dashboard.</p>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert" role="alert">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" id="login-form" novalidate>
+                    <div class="field">
+                        <label for="email">Email address</label>
+                        <input id="email" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+                        <span class="field-message" id="email-message" aria-live="polite"></span>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <input id="password" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+                            <button class="toggle-password" type="button" id="toggle-password" aria-label="Show password">Show</button>
+                        </div>
+                        <span class="caps-warning" id="caps-warning" hidden>Caps Lock is on</span>
+                        <span class="field-message" id="password-message" aria-live="polite"></span>
+                    </div>
+
+                    <button class="submit-button" type="submit" id="submit-button">Sign in securely</button>
+                </form>
+
+                <p class="create-account">New here? <a href="{{ url_for('register') }}">Create an account</a></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById("login-form");
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const emailMessage = document.getElementById("email-message");
+        const passwordMessage = document.getElementById("password-message");
+        const submitButton = document.getElementById("submit-button");
+        const togglePassword = document.getElementById("toggle-password");
+        const capsWarning = document.getElementById("caps-warning");
+
+        function validateEmail() {
+            const valid = email.validity.valid && email.value.trim() !== "";
+            email.classList.toggle("invalid", !valid);
+            emailMessage.textContent = valid || email.value === "" ? "" : "Enter a valid email address.";
+            return valid;
+        }
+
+        function validatePassword() {
+            const valid = password.value.length > 0;
+            password.classList.toggle("invalid", !valid);
+            passwordMessage.textContent = valid ? "" : "Enter your password.";
+            return valid;
+        }
+
+        email.addEventListener("input", validateEmail);
+        email.addEventListener("blur", validateEmail);
+        password.addEventListener("input", validatePassword);
+        password.addEventListener("blur", validatePassword);
+
+        togglePassword.addEventListener("click", () => {
+            const visible = password.type === "text";
+            password.type = visible ? "password" : "text";
+            togglePassword.textContent = visible ? "Show" : "Hide";
+            togglePassword.setAttribute("aria-label", visible ? "Show password" : "Hide password");
+            password.focus();
+        });
+
+        password.addEventListener("keyup", event => {
+            capsWarning.hidden = !event.getModifierState("CapsLock");
+        });
+        password.addEventListener("blur", () => { capsWarning.hidden = true; });
+
+        form.addEventListener("submit", event => {
+            const valid = validateEmail() && validatePassword();
+            if (!valid) {
+                event.preventDefault();
+                return;
+            }
+            submitButton.disabled = true;
+            submitButton.textContent = "Checking your account...";
+        });
+    </script>
+</body>
+</html>
